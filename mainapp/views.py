@@ -34,3 +34,10 @@ def register(request):
 def choose(request):
     return render(request, 'mainapp/choose.html', {'title' :  'Choose', 'name' : 'Mohil'})
 
+@login_required
+def session(request):
+    return render(request, 'mainapp/session.html', {'title' : 'Session', 'name' : 'Mohil'})
+
+@login_required
+def analysis(request):
+    return render(request, 'mainapp/analysis.html', {'title' : 'Analysis', 'name' : 'Mohil'})
