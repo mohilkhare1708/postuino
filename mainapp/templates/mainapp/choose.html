@@ -1,0 +1,63 @@
+{% extends 'mainapp/base.html' %} {% load static %} {% block content %}
+<div class="content" style="margin-top: 100px">
+  <div
+    class="
+      container-fluid container-xl
+      d-flex
+      align-items-center
+      justify-content-between
+    "
+  >
+    <div class="row ml-4 mr-4">
+      <h2 class="mt-4">Dashboard</h2>
+      <h5>Greetings, {{ name }}! What are you up to today?</h5>
+    </div>
+  </div>
+  <div
+    class="
+      container-fluid container-xl
+      d-flex
+      align-items-center
+      justify-content-between
+      mt-4
+    "
+  >
+    <div class="card" style="margin-right: 3em; margin-bottom: 2em;">
+      <div class="card-body">
+        <div class="row">
+            <img
+              src="{% static 'img/work.png' %}"
+              class="img-fluid"
+              style="text-align: left !important"
+            />
+        </div>
+        <div class="row">
+          <a href="{% url 'home-page' %}"
+            ><button type="button" class="btn btn-success btn-lg" style="width: 100%;">
+              Start a New Session
+            </button></a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-left: 3em; margin-bottom: 2em;">
+      <div class="card-body">
+        <div class="row">
+          <img
+            src="{% static 'img/analyse.png' %}"
+            class="img-fluid"
+            style="text-align: left !important"
+          />
+        </div>
+        <div class="row">
+          <a href="{% url 'home-page' %}"
+            ><button type="button" class="btn btn-success btn-lg" style="width: 100%;">
+              Analyse Your Sessions
+            </button></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

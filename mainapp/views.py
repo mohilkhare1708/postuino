@@ -32,5 +32,5 @@ def register(request):
 
 @login_required
 def choose(request):
-    return render(request, 'mainapp/choose.html', {'title' :  'Choose'})
+    return render(request, 'mainapp/choose.html', {'title' :  'Choose', 'name' : 'Mohil'})
 
