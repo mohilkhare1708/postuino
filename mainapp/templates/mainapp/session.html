@@ -1,4 +1,58 @@
-{% extends 'mainapp/base.html' %} {% load static %} {% block content %}
+{% extends 'mainapp/base.html' %} {% load static %} {% block headscripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+<script src="https://unpkg.com/ml5@0.2.3/dist/ml5.min.js"></script>
+<script>
+  let videofeed;
+  let posenet;
+  let poses = [];
+  let started = false;
+
+  function setup() {
+    //creating a canvas by giving the dimensions
+    const canvas = createCanvas(700, 480);
+    canvas.parent("video");
+
+    videofeed = createCapture(VIDEO);
+    videofeed.size(width, height);
+    console.log("setup");
+
+    // setting up the poseNet model to feed in the video feed.
+    posenet = ml5.poseNet(videofeed);
+
+    posenet.on("pose", function (results) {
+      poses = results;
+    });
+
+    videofeed.hide();
+    noLoop();
+  }
+
+  // p5.js draw function() is called after the setup function
+  function draw() {
+    if (started) {
+      image(videofeed, 0, 0, width, height);
+      //calEyes();
+    }
+  }
+
+  // toggle button for starting the video feed
+  function start() {
+    select("#startstop").html("Stop");
+    document.getElementById("startstop").addEventListener("click", stop);
+    started = true;
+    loop();
+  }
+
+  // toggle button for ending the video feed
+  function stop() {
+    select("#startstop").html("Start");
+    document.getElementById("startstop").addEventListener("click", start);
+    removeblur();
+    started = false;
+    noLoop();
+  }
+</script>
+{% endblock headscripts %} {% block content %}
 <style>
   * {
     box-sizing: border-box;
@@ -15,11 +69,11 @@
   }
 
   .spButton {
-      opacity: 0.3;
+    opacity: 0.3;
   }
-  
+
   .spButton:hover {
-      opacity: 1;
+    opacity: 1;
   }
 
   .panel-quote {
@@ -31,7 +85,7 @@
     min-width: 500px;
     margin: auto;
     box-sizing: border-box;
-    background-color: #c1e7e3;
+    background-color: #fdfd96;
   }
 
   .social-share {
@@ -114,6 +168,7 @@
       d-flex
       align-items-center
       justify-content-between
+      mt-5
     "
   >
     <div class="card" style="margin-right: 3em; margin-bottom: 2em">

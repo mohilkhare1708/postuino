@@ -57,59 +57,7 @@
       rel="stylesheet"
     />
 	<script src="https://use.fontawesome.com/410905cb58.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
-    <script src="https://unpkg.com/ml5@0.2.3/dist/ml5.min.js"></script>
-    <script>
-      let videofeed;
-      let posenet;
-      let poses = [];
-      let started = false;
-
-      function setup() {
-        //creating a canvas by giving the dimensions
-        const canvas = createCanvas(700, 480);
-        canvas.parent("video");
-
-        videofeed = createCapture(VIDEO);
-        videofeed.size(width, height);
-        console.log("setup");
-
-        // setting up the poseNet model to feed in the video feed.
-        posenet = ml5.poseNet(videofeed);
-
-        posenet.on("pose", function (results) {
-          poses = results;
-        });
-
-        videofeed.hide();
-        noLoop();
-      }
-
-      // p5.js draw function() is called after the setup function
-      function draw() {
-        if (started) {
-          image(videofeed, 0, 0, width, height);
-          //calEyes();
-        }
-      }
-
-      // toggle button for starting the video feed
-      function start() {
-        select("#startstop").html("stop");
-        document.getElementById("startstop").addEventListener("click", stop);
-        started = true;
-        loop();
-      }
-
-      // toggle button for ending the video feed
-      function stop() {
-        select("#startstop").html("start");
-        document.getElementById("startstop").addEventListener("click", start);
-        removeblur();
-        started = false;
-        noLoop();
-      }
-    </script>
+	{% block headscripts %} {% endblock %} 
   </head>
 
   <body>
@@ -158,7 +106,9 @@
         </nav>
       </div>
     </header>
+	<section id="hero" class="hero align-items-center">
     {% block content %}{%endblock %}
+	</section>
     <footer id="footer" class="footer">
       <div class="footer-top">
         <div class="container">
