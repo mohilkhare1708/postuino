@@ -56,19 +56,15 @@
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
       rel="stylesheet"
     />
-	<script src="https://use.fontawesome.com/410905cb58.js"></script>
-	{% block headscripts %} {% endblock %} 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="https://use.fontawesome.com/410905cb58.js"></script>
+    {% block headscripts %} {% endblock %}
   </head>
 
   <body>
     <header id="header" class="header fixed-top">
       <div
-        class="
-          container-fluid container-xl
-          d-flex
-          align-items-center
-          justify-content-between
-        "
+        class="container-fluid container-xl d-flex align-items-center justify-content-between"
       >
         <a href="{% url 'home-page' %}" class="logo d-flex align-items-center">
           <img src="{% static 'img/logo.png' %}" alt="" />
@@ -106,9 +102,9 @@
         </nav>
       </div>
     </header>
-	<section id="hero" class="hero align-items-center">
-    {% block content %}{%endblock %}
-	</section>
+    <section id="hero" class="hero align-items-center">
+      {% block content %}{%endblock %}
+    </section>
     <footer id="footer" class="footer">
       <div class="footer-top">
         <div class="container">
@@ -173,11 +169,7 @@
             </div>
 
             <div
-              class="
-                col-lg-3 col-md-12
-                footer-contact
-                text-center text-md-start
-              "
+              class="col-lg-3 col-md-12 footer-contact text-center text-md-start"
             >
               <h4>Contact Us</h4>
               <p>
