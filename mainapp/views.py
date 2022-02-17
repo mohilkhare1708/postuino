@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 
 
 def home_page(request):
-    return render(request, 'mainapp/home.html', {'title' : 'Home'})
+    return render(request, 'mainapp/home.html', {'title': 'Home'})
+
 
 def register(request):
     if request.method == 'POST':
@@ -28,16 +29,24 @@ def register(request):
             return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request, 'mainapp/register.html', {'form': form, 'title' : 'Register'})
+    return render(request, 'mainapp/register.html', {'form': form, 'title': 'Register'})
+
 
 @login_required
 def choose(request):
-    return render(request, 'mainapp/choose.html', {'title' :  'Choose', 'name' : 'Mohil'})
+    return render(request, 'mainapp/choose.html', {'title':  'Choose', 'name': 'Mohil'})
+
 
 @login_required
 def session(request):
-    return render(request, 'mainapp/session.html', {'title' : 'Session', 'name' : 'Mohil'})
+    name = request.user
+    context = {
+        'title': 'Session',
+        'name': name
+    }
+    return render(request, 'mainapp/session.html', name)
+
 
 @login_required
 def analysis(request):
-    return render(request, 'mainapp/analysis.html', {'title' : 'Analysis', 'name' : 'Mohil'})
+    return render(request, 'mainapp/analysis.html', {'title': 'Analysis', 'name': 'Mohil'})
