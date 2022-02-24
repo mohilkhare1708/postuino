@@ -44,7 +44,7 @@ def session(request):
         'title': 'Session',
         'name': name
     }
-    return render(request, 'mainapp/session.html', name)
+    return render(request, 'mainapp/session.html', context)
 
 
 @login_required
