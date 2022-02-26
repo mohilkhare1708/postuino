@@ -1,9 +1,11 @@
 # from mainapp.models import Result, Test
+from unicodedata import name
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import User, Session
 
 
 def home_page(request):
@@ -50,3 +52,13 @@ def session(request):
 @login_required
 def analysis(request):
     return render(request, 'mainapp/analysis.html', {'title': 'Analysis', 'name': 'Mohil'})
+
+def all_sessions(request):
+    obj=Session.objects.all()
+    return render(request, 'mainapp/all_sessions.html')
+
+def graph(request):
+    return render(request,'mainapp/graph.html')
+
+def graph2(request):
+    return render(request,'mainapp/graph2.html')
