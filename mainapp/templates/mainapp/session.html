@@ -67,6 +67,18 @@
     removeblur();
     started = false;
     noLoop();
+    $.ajax({
+      type: "POST",
+      url: "{$ url 'session' %}",
+      data: {
+        slouches: slouches,
+        startTime: startTime,
+        endTime: endTime,
+        date: date,
+      },
+      dataType: "json",
+      //success: successHandler,
+    });
   }
 
   var rightEye,
@@ -95,7 +107,6 @@
         if (Math.abs(rightEye.y - defaultRightEyePosition[0]) > 30) {
           if (slouching == false) slouches++;
           slouching = true;
-          console.log(slouches);
           blur();
         }
         if (Math.abs(rightEye.y - defaultRightEyePosition[0]) < 30) {
