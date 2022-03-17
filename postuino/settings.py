@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import environ
+import django_heroku
+
 
 env = environ.Env()
 # reading .env file
@@ -151,4 +153,6 @@ LOGIN_REDIRECT_URL = 'home-page'
 LOGIN_URL = '/login/'
 
 AUTH_PROFILE_MODULE = 'mainapp.Profile'
+
+django_heroku.settings(locals())
 
