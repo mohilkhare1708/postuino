@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
+
+MONGO_CREDENTIAL = env('MONGO_CREDENTIAL')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-91&fnn3#+gp!q9d-^#8svrei*v)zdf7vk#o60teq5o8vgm#4$j'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,7 +94,7 @@ DATABASES = {
         'NAME': 'postuino-db',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'mongodb+srv://mohilkhare:p%40%26%26w0rd@cluster0.pe8ju.mongodb.net/postuino-db?retryWrites=true&w=majority'
+            'host': MONGO_CREDENTIAL
         }  
     }
 }
