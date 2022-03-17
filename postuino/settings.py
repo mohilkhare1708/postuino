@@ -78,9 +78,17 @@ WSGI_APPLICATION = 'postuino.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'postuino-db',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': 'mongodb+srv://mohilkhare:p%40%26%26w0rd@cluster0.pe8ju.mongodb.net/postuino-db?retryWrites=true&w=majority'
+        }  
     }
 }
 
