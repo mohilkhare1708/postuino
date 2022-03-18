@@ -41,9 +41,9 @@ def choose(request):
 
 @login_required
 def session(request):
-    if request.is_ajax():
-        data = request.POST.get('slouches', None)
-        print(data)
+    # if request.is_ajax():
+    #     data = request.POST.get('slouches', None)
+    #     print(data)
     name = request.user
     context = {
         'title': 'Session',
