@@ -14,10 +14,10 @@ class Profile(models.Model):
         return self.user.username
 
 class Session(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    session_date = models.DateField()
-    session_startTime = models.TimeField()
-    session_endTime = models.TimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    session_date = models.CharField(max_length=100, null=True)
+    session_startTime = models.CharField(max_length=100, null=True)
+    session_endTime = models.CharField(max_length=100, null=True)
     session_slouches = models.IntegerField(null=True)
 
 @receiver(post_save, sender=User)

@@ -44,6 +44,16 @@ def session(request):
     # if request.is_ajax():
     #     data = request.POST.get('slouches', None)
     #     print(data)
+    if request.method == 'POST':
+        current_session = Session.objects.create(
+            user=request.user, 
+            session_slouches=request.POST['slouches'], 
+            session_endTime = request.POST['endTime'], 
+            session_startTime = request.POST['startTime'], 
+            session_date = request.POST['date']
+        )
+        current_session.save()
+        print(request.POST['slouches'])
     name = request.user
     context = {
         'title': 'Session',

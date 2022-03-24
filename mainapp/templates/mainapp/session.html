@@ -13,11 +13,26 @@
     endTime,
     slouches = 0,
     date =
-      d.getDate().toString() +
-      "/" +
+    d.getFullYear().toString() +
+      "-" +
       d.getMonth().toString() +
-      "/" +
-      d.getFullYear().toString();
+      "-" +
+      d.getDate().toString();
+
+  function post_results() {
+    $.post(
+      '/session/', {
+        date: date,
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        startTime: startTime,
+        endTime: endTime,
+        slouches: slouches
+      }, 
+      function (data) {
+        alert(data);
+      }
+    );
+  }
 
   function sleep(milliseconds) {
     const date = Date.now();
@@ -66,20 +81,21 @@
     document.getElementById("startstop").addEventListener("click", start);
     removeblur();
     started = false;
+    endTime = d.getHours().toString() + ":" + d.getMinutes().toString();
     noLoop();
-    $.ajax({
-      type: "POST",
-      url: "{$ url 'session' %}",
-      data: {
-        slouches: slouches,
-        startTime: startTime,
-        endTime: endTime,
-        date: date,
-      },
-      dataType: "json",
-      //success: successHandler,
-    });
-    console.log("bloobies");
+    // $.ajax({
+    //   type: "POST",
+    //   url: "{$ url 'session' %}",
+    //   data: {
+    //     slouches: slouches,
+    //     startTime: startTime,
+    //     endTime: endTime,
+    //     date: date,
+    //   },
+    //   dataType: "json",
+    //   //success: successHandler,
+    // });
+    post_results();
   }
 
   var rightEye,
@@ -88,6 +104,8 @@
     defaultLeftEyePosition = [];
 
   function calEyes() {
+    console.log(slouching);
+    // sleep(2000);
     for (let i = 0; i < poses.length; i++) {
       let pose = poses[i].pose;
       // console.log(pose);
@@ -106,8 +124,10 @@
         }
 
         if (Math.abs(rightEye.y - defaultRightEyePosition[0]) > 30) {
-          if (slouching == false) slouches++;
-          slouching = true;
+          if (slouching == false) {
+            slouches++;
+            slouching = true;
+          }
           blur();
         }
         if (Math.abs(rightEye.y - defaultRightEyePosition[0]) < 30) {
