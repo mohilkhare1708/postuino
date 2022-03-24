@@ -1,4 +1,5 @@
 # from mainapp.models import Result, Test
+from pprint import pprint
 from unicodedata import name
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
@@ -7,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import environ
 from pymongo import MongoClient
+from datetime import date
 
 env = environ.Env()
 # reading .env file
@@ -70,7 +72,27 @@ def session(request):
 
 @login_required
 def analysis(request):
-    return render(request, 'mainapp/analysis.html', {'title': 'Analysis', 'name': 'Mohil'})
+    def returnDayMonth(date):
+        ans = []
+        day = ''
+        for i in range(len(date)):
+            if date[i] == '-':
+                ans.append(int(day))
+                day = ''
+            else:
+                day += date[i]
+        ans.append(int(day))
+        return ans
+
+    filtered_sessions = sessions.find({'user' : request.user.id})
+    fsessions = []
+    for session in filtered_sessions:
+        ans = returnDayMonth(session['session_date'])
+        fsessions.append({
+            'startTime' : session['session_startTime'],
+            'date' : date(day=ans[2], month=ans[1], year=ans[0]).strftime('%d %B %Y')
+        })
+    return render(request, 'mainapp/analysis.html', {'title': 'Analysis', 'name': 'Mohil', 'sessions' : fsessions})
 
 def all_sessions(request):
     # obj=Session.objects.all()
