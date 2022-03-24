@@ -5,8 +5,17 @@ from .forms import UserRegisterForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import User, Session
+import environ
+from pymongo import MongoClient
 
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
+
+client = MongoClient(env('MONGO_CREDENTIAL'))
+db = client['postuino-db']
+
+sessions = db['sessions']
 
 def home_page(request):
     return render(request, 'mainapp/home.html', {'title': 'Home'})
@@ -41,18 +50,15 @@ def choose(request):
 
 @login_required
 def session(request):
-    # if request.is_ajax():
-    #     data = request.POST.get('slouches', None)
-    #     print(data)
     if request.method == 'POST':
-        current_session = Session.objects.create(
-            user=request.user, 
-            session_slouches=request.POST['slouches'], 
-            session_endTime = request.POST['endTime'], 
-            session_startTime = request.POST['startTime'], 
-            session_date = request.POST['date']
-        )
-        current_session.save()
+        session_details = {
+            'user' : request.user.id,
+            'session_slouches' : request.POST['slouches'],
+            'session_startTime' : request.POST['startTime'],
+            'session_endTime' : request.POST['endTime'], 
+            'session_date' : request.POST['date']
+        }
+        sessions.insert_one(session_details)
         print(request.POST['slouches'])
     name = request.user
     context = {
@@ -67,7 +73,7 @@ def analysis(request):
     return render(request, 'mainapp/analysis.html', {'title': 'Analysis', 'name': 'Mohil'})
 
 def all_sessions(request):
-    obj=Session.objects.all()
+    # obj=Session.objects.all()
     return render(request, 'mainapp/all_sessions.html')
 
 def graph(request):

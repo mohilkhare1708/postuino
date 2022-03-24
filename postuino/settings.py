@@ -20,8 +20,6 @@ env = environ.Env()
 # reading .env file
 environ.Env.read_env()
 
-MONGO_CREDENTIAL = env('MONGO_CREDENTIAL')
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,6 +42,7 @@ INSTALLED_APPS = [
     # ours
     'mainapp.apps.MainappConfig',
     'crispy_forms',
+    'pymongo',
     # preinstalled
     'django.contrib.admin',
     'django.contrib.auth',
@@ -89,17 +88,9 @@ WSGI_APPLICATION = 'postuino.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'postuino-db',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': MONGO_CREDENTIAL
-        }  
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

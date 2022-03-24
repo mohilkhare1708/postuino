@@ -13,13 +13,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-class Session(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    session_date = models.CharField(max_length=100, null=True)
-    session_startTime = models.CharField(max_length=100, null=True)
-    session_endTime = models.CharField(max_length=100, null=True)
-    session_slouches = models.IntegerField(null=True)
-
 @receiver(post_save, sender=User)
 def update_profile_signal(sender, instance, created, **kwargs):
     if created:

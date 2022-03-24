@@ -12,14 +12,14 @@ class ProfileAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
-class SessionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'session_date',
-                    'session_startTime', 'session_endTime', 'session_slouches')
-    list_display_links = ('id', 'user', 'session_date',
-                          'session_startTime', 'session_endTime', 'session_slouches')
-    search_fields = ('id', 'user')
-    list_per_page = 20
+# class SessionAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'user', 'session_date',
+#                     'session_startTime', 'session_endTime', 'session_slouches')
+#     list_display_links = ('id', 'user', 'session_date',
+#                           'session_startTime', 'session_endTime', 'session_slouches')
+#     search_fields = ('id', 'user')
+#     list_per_page = 20
 
 
 admin.site.register(models.Profile, ProfileAdmin)
-admin.site.register(models.Session, SessionAdmin)
+# admin.site.register(models.Session, SessionAdmin)
