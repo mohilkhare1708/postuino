@@ -2,18 +2,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
 <script src="https://unpkg.com/ml5@0.2.3/dist/ml5.min.js"></script>
 <script>
-  let videofeed;
-  let posenet;
-  let poses = [];
+  let videofeed,
+    timeGap = 1,
+    posenet,
+    modKeep;
+  let poses = [],
+    slouchKeeper = [];
   let started = false,
     slouching = false;
   var audio = document.getElementById("audioElement");
-  const d = new Date();
+  let d = new Date();
+  const timeKeep = new Set();
   let startTime,
     endTime,
     slouches = 0,
     date =
-    d.getFullYear().toString() +
+      d.getFullYear().toString() +
       "-" +
       d.getMonth().toString() +
       "-" +
@@ -21,15 +25,19 @@
 
   function post_results() {
     $.post(
-      '/session/', {
+      "/session/",
+      {
         date: date,
-        csrfmiddlewaretoken: '{{ csrf_token }}',
+        csrfmiddlewaretoken: "{{ csrf_token }}",
         startTime: startTime,
         endTime: endTime,
-        slouches: slouches
-      }, 
+        slouches: slouches,
+        slouchKeeper: JSON.stringify(slouchKeeper),
+      },
       function (data) {
-        alert(data);
+        alert(
+          "Session stored successfully! Head to the dashboard to see how you did!"
+        );
       }
     );
   }
@@ -64,37 +72,33 @@
     if (started) {
       image(videofeed, 0, 0, width, height);
       calEyes();
+      d = new Date();
+      let tt = d.getHours().toString() + ":" + d.getMinutes().toString();
+      if (d.getMinutes() % timeGap == modKeep && !timeKeep.has(tt)) {
+        slouchKeeper.push([tt, slouches]);
+        console.log(slouchKeeper);
+        timeKeep.add(tt);
+      }
     }
   }
 
   function start() {
-    select("#startstop").html("stop");
+    select("#startstop").html("Stop");
     document.getElementById("startstop").addEventListener("click", stop);
     started = true;
     startTime = d.getHours().toString() + ":" + d.getMinutes().toString();
+    modKeep = d.getMinutes() % timeGap;
     console.log(date, startTime);
     loop();
   }
 
   function stop() {
-    select("#startstop").html("start");
+    select("#startstop").html("Start");
     document.getElementById("startstop").addEventListener("click", start);
     removeblur();
     started = false;
     endTime = d.getHours().toString() + ":" + d.getMinutes().toString();
     noLoop();
-    // $.ajax({
-    //   type: "POST",
-    //   url: "{$ url 'session' %}",
-    //   data: {
-    //     slouches: slouches,
-    //     startTime: startTime,
-    //     endTime: endTime,
-    //     date: date,
-    //   },
-    //   dataType: "json",
-    //   //success: successHandler,
-    // });
     post_results();
   }
 
@@ -269,15 +273,11 @@
         <div class="row">
           <button
             class="btn btn-primary btn-l"
+            type="submit"
             onClick="start()"
             id="startstop"
           >
             Click here to Start!
-          </button>
-        </div>
-        <div class="row mt-2">
-          <button class="btn btn-primary btn-l" onClick="blur()">
-            Toggle Blur! (For Representation Purpose Only)
           </button>
         </div>
       </div>

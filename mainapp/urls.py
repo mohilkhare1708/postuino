@@ -10,7 +10,8 @@ urlpatterns = [
     path('choose/', views.choose, name='choose'),
     path('session/', views.session, name='session'),
     path('analysis/', views.analysis, name='analysis'),
-    path('all_sessions/',views.all_sessions,name='All sessions'),
-    path('graph/',views.graph,name='graph'),
-    path('graph_/', views.graph2, name='graph_')
+    path('session_analysis/<str:pk>',
+         views.session_analysis, name='session-analysis'),
+    # path('graph/',views.graph,name='graph'),
+    # path('graph_/', views.graph2, name='graph_')
 ]

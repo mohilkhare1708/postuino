@@ -1,15 +1,16 @@
-{% extends 'mainapp/base.html' %}
-{% load static %}
-{% block content %}
-    <div class="container" style="margin-top: 10em;">
-        <div class="row">
-            <div class="col-lg-6 d-flex flex-column justify-content-center">
-                <h1 data-aos="fade-up">Slouch no more!</h1>
-                <h2 data-aos="fade-up" data-aos-delay="400">We provide complete assessment solution, even for descriptive answers!</h2>
-            </div>
-            <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
-                <img src="{% static 'img/hero-img.png' %}" class="img-fluid" alt="">
-            </div>
-        </div>
+{% extends 'mainapp/base.html' %} {% load static %} {% block content %}
+<div class="container" style="margin-top: 10em">
+  <div class="row">
+    <div class="col-lg-6 d-flex flex-column justify-content-center">
+      <h1 data-aos="fade-up">Sit straight, say no to banana shaped spines!</h1>
+      <h2 data-aos="fade-up" data-aos-delay="400">
+        Postuino will stay vigilant, making sure you don't slouch as you focus
+        on the things that matter.
+      </h2>
     </div>
+    <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+      <img src="{% static 'img/hero-img.png' %}" class="img-fluid" alt="" />
+    </div>
+  </div>
+</div>
 {% endblock content %}

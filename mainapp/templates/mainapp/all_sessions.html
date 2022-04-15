@@ -2,23 +2,23 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-                body {
-            padding: 40px;
-            margin: auto;
-            background: rgb(242 244 247);
-            font-family: system-ui;
-            box-sizing: border-box;
-            height: 100vh;
-            width: 100vw;
-        }
+      body {
+        padding: 40px;
+        margin: auto;
+        background: rgb(242 244 247);
+        font-family: system-ui;
+        box-sizing: border-box;
+        height: 100vh;
+        width: 100vw;
+      }
 
-        .card {
+      .card {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -31,39 +31,39 @@
         border-radius: 8px;
         max-width: 350px;
         margin: auto;
-        }
+      }
 
-        .card-header {
+      .card-header {
         display: flex;
         flex-direction: column;
-        }
+      }
 
-        .card-body {
+      .card-body {
         display: flex;
         flex-direction: column;
         gap: 0.8rem;
-        }
+      }
 
-        .card-footer {
+      .card-footer {
         display: flex;
         justify-content: space-between;
         -webkit-box-align: center;
         align-items: center;
         padding: 0.2rem;
-        }
+      }
 
-        .card-footer .assigned {
+      .card-footer .assigned {
         display: flex;
         gap: 0.2rem;
-        }
+      }
 
-        .card-tags {
+      .card-tags {
         display: flex;
         width: 100%;
         gap: 0.2rem;
-        }
+      }
 
-        .card-tags label {
+      .card-tags label {
         padding: 6px 12px;
         background: rgb(242, 244, 247);
         color: rgb(71, 84, 103);
@@ -73,45 +73,51 @@
         border-radius: 6px;
         text-align: center;
         margin-right: 8px;
-        }
+      }
 
-        .card-header h2 {
+      .card-header h2 {
         color: rgb(102, 112, 133);
         font-weight: bold;
         line-height: 18px;
         font-size: 15px;
-        }
+      }
 
-        .card-info {
+      .card-info {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         -webkit-box-align: center;
         align-items: center;
         gap: 0.5rem;
-        }
-
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="card">
-        <div class="card-header">
-            <h2>Session #1</h2>
-            <div class="card-info"><span class="date">25th February, 2022</span><span class="dot"></span><span
-                    class="author"></span></div>
+      <div class="card-header">
+        <h2>Session #1</h2>
+        <div class="card-info">
+          <span class="date">25th February, 2022</span><span class="dot"></span
+          ><span class="author"></span>
         </div>
-        <a href="{% url 'graph' %}"><button type="button"  style="width: 100%;">Analyse</button></a>
+      </div>
+      <a href="{% url 'graph' %}"
+        ><button type="button" style="width: 100%">Analyse</button></a
+      >
     </div>
     <div class="card">
-        <div class="card-header">
-            <h2>Session #2</h2>
-            <div class="card-info"><span class="date">26th February, 2022</span><span class="dot"></span><span
-                    class="author"></span></div>
+      <div class="card-header">
+        <h2>Session #2</h2>
+        <div class="card-info">
+          <span class="date">26th February, 2022</span><span class="dot"></span
+          ><span class="author"></span>
         </div>
-        <a href="{% url 'graph_' %}"><button type="button" style="width: 100%;">Analyse</button></a>
+      </div>
+      <a href="{% url 'graph_' %}"
+        ><button type="button" style="width: 100%">Analyse</button></a
+      >
     </div>
-    
-</body>
+  </body>
 </html>
 
 {% endblock content %}

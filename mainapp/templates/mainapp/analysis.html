@@ -2,43 +2,40 @@
 <style>
   .card_analysis {
     background: linear-gradient(to top, #191d23, #252a34);
-    width: 90%;
-    max-width: 400px;
+    width: 30%;
     padding: 30px;
     border-radius: 30px;
     flex-direction: column;
     justify-content: center;
-}
-.button {
-  width: 100%;
-  text-transform: uppercase;
-  font-size: 20px;
-  letter-spacing: 5px;
-  font-weight: 600;
-  padding: 10px;
-  border-radius: 30px;
-  border: none;
-  background-color: #012970;
-  color: #f2f5fc;
-  cursor: pointer;
-  transition: 0.3s background-color;
-}
-.button:hover {
-  background-color: #fff;
-  color: #252a34;
-}
-.card_analysis h3 {
+  }
+  .button {
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 20px;
+    letter-spacing: 5px;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 30px;
+    border: none;
+    background-color: #012970;
+    color: #f2f5fc;
+    cursor: pointer;
+    transition: 0.3s background-color;
+  }
+  .button:hover {
+    background-color: #fff;
+    color: #252a34;
+  }
+  .card_analysis h3 {
     margin: 20px 0 10px 0;
     color: #fefefe;
     font-size: 22px;
-}
-.card_analysis p {
+  }
+  .card_analysis p {
     color: #8d94a3;
     font-size: 15px;
-}
+  }
 </style>
-
-
 
 <div class="content" style="margin-top: 100px">
   <div
@@ -46,26 +43,150 @@
   >
     <div class="row ml-4 mr-4">
       <h2 class="mt-4">Analysis</h2>
-      <h5>Greetings, {{ name }}! Let's keep a check on our posture, shall we?</h5>
+      <h5>
+        Greetings, {{ name }}! Let's keep a check on our posture, shall we?
+      </h5>
     </div>
   </div>
   <div
     class="container-fluid container-xl d-flex align-items-center justify-content-between mt-4"
   >
-  <body>
-    {% for session in sessions %}
-    <div class="card_analysis m-3" id="intro">
-        <h3>Session on {{ session.date }}</h3>
-        <p>
-            {{ session.startTime }}
-        </p>
-        <button class="button" onclick="submit()">Analyse</button>
+    <div class="row">
+      <div class="card">
+        <div class="card-body">
+          <div class="wrapper mt-4"><canvas id="canvas"></canvas></div>
+        </div>
+      </div>
     </div>
-    {% endfor %}
-
-    <script src="script.js"></script>
-</body>
+  </div>
+  <div
+    class="container-fluid container-xl align-items-center justify-content-between mt-4"
+  >
+    <div class="row">
+      {% for session in sessions %}
+      <div class="col-sm-4 card_analysis m-3" id="intro">
+        <h3>Session on {{ session.date }}</h3>
+        <p>{{ session.startTime }}</p>
+        <button
+          class="button"
+          onclick="location.href='{% url 'session-analysis' session.pk %}';"
+        >
+          Analyse
+        </button>
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
+
+<script src="script.js"></script>
+
+<script>
+  Chart.defaults.font.size = 160;
+  const colors = {
+    purple: {
+      default: "rgba(149, 76, 233, 1)",
+      half: "rgba(149, 76, 233, 0.5)",
+      quarter: "rgba(149, 76, 233, 0.25)",
+      zero: "rgba(149, 76, 233, 0)",
+    },
+    indigo: {
+      default: "rgba(80, 102, 120, 1)",
+      quarter: "rgba(80, 102, 120, 0.25)",
+    },
+  };
+
+  const weight = {{ y|safe }};
+  const labels = {{ x|safe }};
+
+  const ctx = document.getElementById("canvas").getContext("2d");
+  ctx.canvas.height = 400;
+  ctx.canvas.width = 1200;
+
+  gradient = ctx.createLinearGradient(0, 25, 0, 300);
+  gradient.addColorStop(0, colors.purple.half);
+  gradient.addColorStop(0.35, colors.purple.quarter);
+  gradient.addColorStop(1, colors.purple.zero);
+
+  const options = {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "No. of Slouches",
+          fontSize: 18,
+          fill: true,
+          backgroundColor: gradient,
+          pointBackgroundColor: colors.purple.default,
+          borderColor: colors.purple.default,
+          data: weight,
+          lineTension: 0.2,
+          borderWidth: 2,
+          pointRadius: 3,
+        },
+      ],
+    },
+    options: {
+      layout: {
+        padding: 10,
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+          labels: {
+            family: "Calibri",
+          },
+        },
+      },
+
+      scales: {
+        xAxes: [
+          {
+            gridLines: {
+              display: false,
+            },
+            ticks: {
+              padding: 15,
+              autoSkip: false,
+              maxRotation: 15,
+              minRotation: 15,
+              fontSize: 18,
+              fontFamily: "Raleway",
+            },
+          },
+        ],
+        yAxes: [
+          {
+            scaleLabel: {
+              display: false,
+              labelString: "Number of Slouches",
+              padding: 15,
+            },
+            gridLines: {
+              display: true,
+              color: colors.indigo.quarter,
+            },
+            ticks: {
+              beginAtZero: false,
+              max: {{ maxY }},
+              min: 0,
+              padding: 10,
+              fontFamily: "Verdana",
+              fontSize: 18,
+            },
+          },
+        ],
+      },
+    },
+  };
+
+  window.onload = function () {
+    window.myLine = new Chart(ctx, options);
+    Chart.defaults.global.defaultFontColor = colors.indigo.default;
+    Chart.defaults.global.defaultFontFamily = "Fira Sans";
+  };
+</script>
 
 {%endblock content %}
