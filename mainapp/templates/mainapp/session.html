@@ -147,14 +147,14 @@
     document.body.style.transition = "1s";
     var audio = document.getElementById("audioElement");
     // console.log("change");
-    // audio.play();
+    audio.play();
   }
 
   function removeblur() {
     document.body.style.filter = "blur(0px)";
     var audio = document.getElementById("audioElement");
 
-    // audio.pause();
+    audio.pause();
   }
 </script>
 {% endblock headscripts %} {% block content %}
@@ -282,6 +282,9 @@
         </div>
       </div>
     </div>
+    <audio id="audioElement">
+      <source src="{% static 'alert.wav' %}" type="audio/wav" />
+    </audio>
     <div class="card" style="margin-right: 3em; margin-bottom: 2em">
       <div class="card-body">
         <div class="container">
