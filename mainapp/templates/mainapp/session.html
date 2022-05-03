@@ -109,11 +109,10 @@
 
   function calEyes() {
     console.log(slouching);
-    // sleep(2000);
+    console.log(poses);
+    sleep(10000);
     for (let i = 0; i < poses.length; i++) {
       let pose = poses[i].pose;
-      // console.log(pose);
-      // sleep(5000); //needs to be removed
       for (let j = 0; j < pose.keypoints.length; j++) {
         let keypoint = pose.keypoints[j];
         rightEye = pose.keypoints[2].position;
