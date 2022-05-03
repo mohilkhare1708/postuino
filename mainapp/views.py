@@ -116,11 +116,25 @@ def analysis(request):
 @login_required
 def session_analysis(request, pk):
     info = sessions.find_one({'_id': ObjectId(pk)})
-    print(info, pk)
+    filtered_sessions = sessions.find({'user': request.user.id})
+    last_slouch = 0
+    for session in filtered_sessions:
+        print(session)
+        if str(session['_id']) == str(pk):
+            break
+        else:
+            last_slouch = int(session['session_slouches'])
+    msg = ''
+    diff = abs(int(info['session_slouches']) - last_slouch)
+    print(info['session_slouches'], last_slouch, diff)
+    if int(info['session_slouches']) >= last_slouch:
+        msg = str(diff) + " more "
+    else:
+        msg = str(diff) + " less "
     slouch_tl = eval(info['session_slouch_timeline'])
-    print(slouch_tl)
     x, y, maxY = [], [], -1
     ans = returnDayMonth(info['session_date'])
+    perc = round((int(info['session_slouches']) / (len(slouch_tl) * 12)) * 100)
     for i in slouch_tl:
         x.append(i[0])
         y.append(i[1])
@@ -129,7 +143,9 @@ def session_analysis(request, pk):
         'x': x,
         'y': y,
         'date': date(day=ans[2], month=ans[1], year=ans[0]).strftime('%d %B %Y'),
-        'no_slouches': info['session_slouches']
+        'no_slouches': info['session_slouches'],
+        'percent': perc,
+        'msg': msg
     }
     return render(request, 'mainapp/graph2.html', context)
 

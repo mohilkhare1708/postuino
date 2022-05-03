@@ -85,7 +85,14 @@
                 >Home</a
               >
             </li>
-            <li><a class="nav-link scrollto" href="#about">Docs</a></li>
+            <li>
+              <a
+                class="nav-link scrollto"
+                href="https://www.github.com/mohilkhare1708/postuino/blob/master/README.md"
+                target="_blank"
+                >Docs</a
+              >
+            </li>
             {% if user.is_authenticated %}
             <li>
               <a href="{% url 'choose' %}"
@@ -140,14 +147,20 @@
               <h4>Useful Links</h4>
               <ul>
                 <li>
-                  <i class="bi bi-chevron-right"></i> <a href="#">Home</a>
+                  <i class="bi bi-chevron-right"></i>
+                  <a href="{% url 'home-page' %}">Home</a>
                 </li>
                 <li>
                   <i class="bi bi-chevron-right"></i>
-                  <a href="#">Get Started</a>
+                  <a href="{% url 'register' %}">Get Started</a>
                 </li>
                 <li>
-                  <i class="bi bi-chevron-right"></i> <a href="#">Docs</a>
+                  <i class="bi bi-chevron-right"></i>
+                  <a
+                    href="https://www.github.com/mohilkhare1708/postuino/blob/master/README.md"
+                    target="_blank"
+                    >Docs</a
+                  >
                 </li>
               </ul>
               {% comment %}
