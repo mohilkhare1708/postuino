@@ -110,33 +110,31 @@
   function calEyes() {
     console.log(slouching);
     console.log(poses);
-    sleep(10000);
-    for (let i = 0; i < poses.length; i++) {
-      let pose = poses[i].pose;
-      for (let j = 0; j < pose.keypoints.length; j++) {
-        let keypoint = pose.keypoints[j];
-        rightEye = pose.keypoints[2].position;
-        leftEye = pose.keypoints[1].position;
+    // sleep(10000);
+    let pose = poses[0].pose;
+    for (let j = 0; j < pose.keypoints.length; j++) {
+      let keypoint = pose.keypoints[j];
+      rightEye = pose.keypoints[2].position;
+      leftEye = pose.keypoints[1].position;
 
-        while (defaultRightEyePosition.length < 1) {
-          defaultRightEyePosition.push(rightEye.y);
-        }
+      while (defaultRightEyePosition.length < 1) {
+        defaultRightEyePosition.push(rightEye.y);
+      }
 
-        while (defaultLeftEyePosition.length < 1) {
-          defaultLeftEyePosition.push(leftEye.y);
-        }
+      while (defaultLeftEyePosition.length < 1) {
+        defaultLeftEyePosition.push(leftEye.y);
+      }
 
-        if (Math.abs(rightEye.y - defaultRightEyePosition[0]) > 30) {
-          if (slouching == false) {
-            slouches++;
-            slouching = true;
-          }
-          blur();
+      if (Math.abs(rightEye.y - defaultRightEyePosition[0]) > 30) {
+        if (slouching == false) {
+          slouches++;
+          slouching = true;
         }
-        if (Math.abs(rightEye.y - defaultRightEyePosition[0]) < 30) {
-          slouching = false;
-          removeblur();
-        }
+        blur();
+      }
+      if (Math.abs(rightEye.y - defaultRightEyePosition[0]) < 30) {
+        slouching = false;
+        removeblur();
       }
     }
   }
