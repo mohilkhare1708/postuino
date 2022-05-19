@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import environ
 import os
+import django_heroku
 
 
 env = environ.Env()
@@ -156,3 +157,5 @@ LOGIN_URL = '/login/'
 AUTH_PROFILE_MODULE = 'mainapp.Profile'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+django_heroku.settings(locals())
