@@ -1,1 +1,1 @@
-web: gunicorn postuino.wsgi
+web: gunicorn postuino.wsgi --log-file -
